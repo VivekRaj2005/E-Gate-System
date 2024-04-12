@@ -1,0 +1,72 @@
+.typewriter h1 {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: 0.15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
+
+.typewriter-container {
+  margin-top: 3.5%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
+@media screen and (max-width: 800px) {
+    .typewriter h1{
+        font-size: 15px !important;
+    }
+
+    .typewriter-container{
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+    }
+
+    .Catagories{
+        display: block !important;
+    }
+
+    .typewriter{
+        width: auto !important;
+
+    }
+
+    html, body {margin: 0; height: 100%; overflow: scroll !important}
+    img{
+        height: 100% !important;
+        width: auto !important  ;
+    }
+
+    .catagory{
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    
+
+}
