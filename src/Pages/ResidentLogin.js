@@ -58,8 +58,8 @@ export default function ResidentLogin(props) {
       var cdata = doc.data();
       if (data.get("email") == cdata["Username"]) {
         if (data.get("password") == cdata["Password"]) {
-          alert("OK");
           props.setResidentData(cdata);
+          props.setResidentID(doc.id);
 
           navigate("/resident/QR");
         } else {

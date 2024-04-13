@@ -16,7 +16,7 @@ function ResidentQR(props) {
   return (
     <>
       <Nav />
-      <CardValidity />
+      <CardValidity residentData={props.residentData} residentID={props.residentID}/>
     </>
   );
 }

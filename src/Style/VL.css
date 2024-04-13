@@ -1,0 +1,23 @@
+.DateHolder{
+    display: flex;
+    justify-content: space-between;
+}
+
+.mbStyler{
+    width: 80%;
+}
+
+@media screen and (width < 800px) {
+    .DateHolder{
+        display: block !important;
+    }
+
+    .picker{
+        margin-top: 5% !important;
+        width: 100% !important;
+    }
+
+    .ExitP{
+        margin-left: 10px !important;
+    }
+}

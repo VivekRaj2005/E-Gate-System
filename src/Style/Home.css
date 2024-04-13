@@ -36,6 +36,8 @@
 }
 
 
+
+
 @media screen and (max-width: 800px) {
     .typewriter h1{
         font-size: 15px !important;
@@ -56,10 +58,10 @@
     }
 
     html, body {margin: 0; height: 100%; overflow: scroll !important}
-    img{
+    /* img{
         height: 100% !important;
         width: auto !important  ;
-    }
+    } */
 
     .catagory{
         display: flex;

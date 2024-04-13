@@ -11,41 +11,44 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import { CardActionArea, Button } from "@mui/material";
-import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+const whiteTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
 
-export default function CardValidity() {
+export default function CardValidity(props) {
   const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "5%" }}>
-      <Card sx={{ maxWidth: 345, padding: "5%" }}>
-        <CardActionArea>
-          <div
-            style={{ display: "flex", justifyContent: "center", margin: "5%" }}
-          >
-            <CardMedia
-              component="img"
-              height="200"
-              image="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=23110362"
-              alt="green iguana"
-            />
-          </div>
-          {/* <CardContent> */}
+    <ThemeProvider theme={whiteTheme}>
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "5%" }}
+      >
+        <Card sx={{ maxWidth: 345, padding: "5%" }}>
+          <CardActionArea>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "5%",
+              }}
+            >
+              <CardMedia
+              style={{border: '5px solid black', padding: "10px", width: '120%'}}
+                component="img"
+                height="200"
+                width="200"
+                image={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${props.residentID}`}
+                alt="green iguana"
+              />
+            </div>
+            {/* <CardContent> */}
             <Typography
               gutterBottom
               variant="h5"
@@ -67,7 +70,7 @@ export default function CardValidity() {
                 margin: "1%",
               }}
             >
-              Vivek Raj
+              {props.residentData.Name}
             </Typography>
             <Typography
               variant="body1"
@@ -78,18 +81,19 @@ export default function CardValidity() {
                 margin: "1%",
               }}
             >
-              23110362
+              {props.residentData.Roll}
             </Typography>
-          {/* </CardContent> */}
-        </CardActionArea>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <CardActions>
-            <Button size="small" color="primary">
-            <CloudDownloadIcon style={{margin: "10px"}} /> DOWNLOAD
-            </Button>
-          </CardActions>
-        </div>
-      </Card>
-    </div>
+            {/* </CardContent> */}
+          </CardActionArea>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <CardActions>
+              <Button size="small" color="primary">
+                <CloudDownloadIcon style={{ margin: "10px" }} /> DOWNLOAD
+              </Button>
+            </CardActions>
+          </div>
+        </Card>
+      </div>
+    </ThemeProvider>
   );
 }

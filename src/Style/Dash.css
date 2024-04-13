@@ -1,0 +1,5 @@
+@media screen and (width < 800px) {
+    .response{
+        display: none;
+    }
+}
