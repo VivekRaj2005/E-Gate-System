@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <style>
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      .logo {
+        margin-top: 30px;
+        border-radius: 100px;
+        height: 100px;
+        width: 100px;
+        display: block;
+        margin: 0 auto;
+      }
+      .container {
+        /* display: -webkit-flex; */
+        justify-content: center;
+      }
+      h3,
+      h5 {
+        padding: 0px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .huge-container {
+        width: 693px;
+        border: 1px solid black;
+        margin: auto;
+        height: 700px;
+      }
+      .content {
+        margin: auto 20px;
+      }
+      .detail {
+        /* display: -webkit-flex; */
+        width: 70%;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 80px;
+      }
+      .details {
+        /* display: -webkit-flex; */
+        flex-direction: column;
+      }
+      .PS {
+        /* display: -webkit-flex; */
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .content {
+        font-size: 13px;
+      }
+      .entry {
+        display: block;
+        margin: 0 auto;
+        height: 150px;
+        width: 150px;
+      }
+      .Sincerely{
+        margin-top: 25%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="huge-container">
+      <div class="container" style="margin-top: 5%">
+        <img
+          src="https://raw.githubusercontent.com/VivekRaj2005/idtracher-assets/main/IITGN.png"
+          alt="sec-logo"
+          class="logo"
+        />
+      </div>
+      <div class="container">
+        <h3 style="text-align: center; margin-top: 2%">
+          Gate Authorization System
+        </h3>
+      </div>
+      <div class="container">
+        <h5 style="text-align: center">IIT Gandhinagar</h5>
+      </div>
+      <div class="content">
+        <p class="salutation">Dear <b>$name</b>,</p>
+        <div class="othercontent">
+          <p style="text-align: justify">
+            This is to inform you that the admin has
+            <span
+              ><b
+                >rejected your entry application for the following reason:</b
+              ></span
+            >
+            <br />
+            $reason
+            <br />
+            If you have any concerns or quiries regarding th rejection of your application, please reach out to <b>admin@egeteiitgn.ac.in</b>
+          </p>
+          <p>PS: Your Tracking ID is: <b>$track</b></p>
+        </div>
+        <br />
+        <br />
+        <div class="Sincerely">
+          Best Regards,
+          <br />
+          Admin
+          <br />
+          Authorization System
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

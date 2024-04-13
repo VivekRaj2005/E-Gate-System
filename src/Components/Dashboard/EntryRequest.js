@@ -127,7 +127,7 @@ export default function EntryRequest(props) {
   };
   const [reason, setReason] = useState("");
 
-  async function handleDeleteElement(docid) {
+  async function handleDeleteElement(name, email, docid) {
     var result = await withReactContent(Swal).fire({
       title: <b>Reject User?</b>,
       input: "text",
@@ -142,6 +142,23 @@ export default function EntryRequest(props) {
     if (!result.isDismissed) {
       await deleteDoc(doc(db, "Dataset (Visitor Application)", docid));
     }
+
+    const currentData = {
+      Name: name,
+      Email: email,
+      Track: docid ,
+      Reason: reason
+    }
+    var sendData = new FormData();
+    for( var key in currentData )
+    {
+      sendData.append(key, currentData[key])
+    }
+    await fetch('https://script.google.com/macros/s/AKfycbxO1uIb2WbHbmrM17GTKGmokboD1XVPJqBOkLLYodNwbE_beeUZIdyI0VBwBnmj3nzT/exec', {
+      method: "POST",
+      mode:'no-cors',
+      body: sendData
+    })
     var myr = [];
     var c = 0;
     // const querySnapshot = await getDocs(query(collection(db, "Dataset (Visitor Application)"), where('Date of Exit', '>', dayjs().unix()) ));

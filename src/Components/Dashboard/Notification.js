@@ -120,7 +120,7 @@ function datediff(first, second) {
   return Math.round((second - first) / (1000 * 60 * 60 * 24));
 }
 
-export default function Dashboard(props) {
+export default function Notification(props) {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [rows, setRows] = useState([]);
@@ -248,7 +248,7 @@ export default function Dashboard(props) {
               Dashboard
             </Typography>
             {props.securityData.Username == "Admin" ? (
-              <IconButton color="inherit" onClick={() => {console.log("Clicked"); navigate("/security/notif")}}>
+              <IconButton color="inherit">
                 <Badge badgeContent={Notifications} color="secondary">
                   <NotificationsIcon />
                 </Badge>
@@ -290,7 +290,7 @@ export default function Dashboard(props) {
                     </ListItemIcon>
                     <ListItemText primary="Entry Requests" />
                   </ListItemButton>
-                  <ListItemButton  onClick={() => {navigate("/security/notif")}}>
+                  <ListItemButton>
                     <ListItemIcon>
                       <BarChartIcon />
                     </ListItemIcon>

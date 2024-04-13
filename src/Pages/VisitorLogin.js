@@ -96,7 +96,7 @@ export default function VisitorLogin() {
         "Reason For Entry": data.get("reason"),
         "Date of Entry": new Date(data.get("entryPicker")),
         "Date of Exit": new Date(data.get("exitPicker")),
-        Approval: ""
+        In: false
       }
     );
     var cuurentData = {
