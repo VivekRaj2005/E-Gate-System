@@ -38,12 +38,16 @@ import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import { useState } from "react";
 import { db } from "../../firebase";
-import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDocs, deleteDoc, query, where } from "firebase/firestore";
 import LockIcon from "@mui/icons-material/Lock";
 import Requests from "./Requests";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+
+function datediff(first, second) {
+  return Math.round((second - first) / (1000 * 60 * 60 * 24));
+}
 
 function Copyright(props) {
   return (
@@ -126,6 +130,34 @@ export default function EntryRequest(props) {
     setOpen(!open);
   };
   const [reason, setReason] = useState("");
+  const [Notifications, setNotifications] = useState(0);
+
+  async function CountNotification() {
+    const querySnapshot1 = await getDocs(
+      query(collection(db, "Database (Resident)"), where("In", "==", false))
+    );
+    var c = 0;
+    querySnapshot1.forEach((doc) => {
+      var data = doc.data();
+      var date = data.LastOut.toDate();
+      if (datediff(new Date(), date) >= 30) {
+        c += 1;
+      }
+    });
+    const querySnapshot2 = await getDocs(
+      query(
+        collection(db, "Dataset (Visitor Application)"),
+        where("In", "==", true)
+      )
+    );
+    querySnapshot2.forEach((doc) => {
+      var data = doc.data();
+      if (datediff(new Date(), data["Date of Exit"].toDate()) < 0) {
+        c += 1;
+      }
+    });
+    setNotifications(c);
+  }
 
   async function handleDeleteElement(name, email, docid) {
     var result = await withReactContent(Swal).fire({
@@ -147,7 +179,7 @@ export default function EntryRequest(props) {
       Name: name,
       Email: email,
       Track: docid ,
-      Reason: reason
+      Reason: result.value
     }
     var sendData = new FormData();
     for( var key in currentData )
@@ -189,6 +221,7 @@ export default function EntryRequest(props) {
 
   async function handleSetData() {
     if (!gotData) {
+      CountNotification()
       var myr = [];
       var c = 0;
       // const querySnapshot = await getDocs(query(collection(db, "Dataset (Visitor Application)"), where('Date of Exit', '>', dayjs().unix()) ));
@@ -258,11 +291,21 @@ export default function EntryRequest(props) {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            {props.securityData.Username == "Admin" ? (
+              <IconButton
+                color="inherit"
+                onClick={() => {
+                  console.log("Clicked");
+                  navigate("/security/notif");
+                }}
+              >
+                <Badge badgeContent={Notifications} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            ) : (
+              <></>
+            )}
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

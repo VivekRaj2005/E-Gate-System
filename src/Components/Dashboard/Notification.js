@@ -40,6 +40,8 @@ import { useState } from "react";
 import { db } from "../../firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import LockIcon from "@mui/icons-material/Lock";
+import GNotify from "./Guest Notify";
+import RNotify from "./Resident Notify";
 
 function Copyright(props) {
   return (
@@ -126,8 +128,11 @@ export default function Notification(props) {
   const [rows, setRows] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [Notifications, setNotifications] = useState(0);
+  const [GNotifyData, setGNotify] = useState([]);
+  const [RNotifyData, setRNotify] = useState([]);
 
   async function CountNotification() {
+    var d1 = [];
     const querySnapshot1 = await getDocs(
       query(collection(db, "Database (Resident)"), where("In", "==", false))
     );
@@ -135,10 +140,28 @@ export default function Notification(props) {
     querySnapshot1.forEach((doc) => {
       var data = doc.data();
       var date = data.LastOut.toDate();
-      if (datediff(new Date(), date) >= 30) {
+      console.log(data, datediff(date, new Date()), date -  new Date())
+      
+      if (datediff(data.LastOut.toDate(), new Date()) >= 30) {
+        d1.push({
+          id: c + 1,
+          name: data.Name,
+          roll: data.Roll,
+          dt:
+            getDate(data.LastOut.toDate()) +
+            " " +
+            getTime(data.LastOut.toDate()),
+          status:
+            "Outside Capus for " +
+            Math.abs(datediff(new Date(), date)).toString() +
+            " day(s)",
+        });
         c += 1;
       }
     });
+    var cc = c;
+    setRNotify(d1);
+    var d2 = [];
     const querySnapshot2 = await getDocs(
       query(
         collection(db, "Dataset (Visitor Application)"),
@@ -149,8 +172,25 @@ export default function Notification(props) {
       var data = doc.data();
       if (datediff(new Date(), data["Date of Exit"].toDate()) < 0) {
         c += 1;
+        d2.push({
+          id: c - cc,
+          name: data.Name,
+          email: data.Email,
+          dt:
+            getDate(data["Date of Exit"].toDate()) +
+            " " +
+            getTime(data["Date of Exit"].toDate()),
+          status:
+            "Validity Expired " +
+            Math.abs(
+              datediff(new Date(), data["Date of Exit"].toDate())
+            ).toString() +
+            " day(s) before",
+        });
       }
     });
+    console.log(d1, d2)
+    setGNotify(d2);
     setNotifications(c);
   }
   function getDate(date) {
@@ -349,40 +389,21 @@ export default function Notification(props) {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Deposits count={count} />
-                </Paper>
-              </Grid>
-
-              {/* Recent Orders */}
               <Grid item xs={12}>
                 <div className="response">
                   <Paper
                     sx={{ p: 2, display: "flex", flexDirection: "column" }}
                   >
-                    <Orders data={rows} />
+                    <GNotify data={GNotifyData} />
+                  </Paper>
+                </div>
+              </Grid>
+              <Grid item xs={12}>
+                <div className="response">
+                  <Paper
+                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                  >
+                    <RNotify data={RNotifyData} />
                   </Paper>
                 </div>
               </Grid>

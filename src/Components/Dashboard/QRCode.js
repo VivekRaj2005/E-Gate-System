@@ -13,8 +13,7 @@ import GppBadIcon from "@mui/icons-material/GppBad";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { addDoc } from "firebase/firestore";
-
+import { addDoc, updateDoc, doc } from "firebase/firestore";
 
 function getDate(date) {
   var today = date;
@@ -45,27 +44,44 @@ function QRCode(props) {
     const querySnapshot = await getDocs(collection(db, "Database (Resident)"));
     var f = false;
     var cdata1 = null;
-    querySnapshot.forEach((doc) => {
-      var cdata = doc.data();
+    querySnapshot.forEach((doc_) => {
+      var cdata = doc_.data();
 
-      if (data == doc.id) {
+      if (data == doc_.id) {
+        if (props.status == "Entry")
+          updateDoc(doc(db, "Database (Resident)", doc_.id), {
+            In: true,
+          });
+        else
+          updateDoc(doc(db, "Database (Resident)", doc_.id), {
+            In: false,
+            LastOut: new Date(),
+          });
+
         cdata1 = cdata;
         setQRResult(cdata);
         seterror(null);
         f = true;
         setGuest(true);
       }
-      
     });
     if (!f) {
-      console.log("Checking Vistor....")
+      console.log("Checking Vistor....");
       const querySnapshotB = await getDocs(
         collection(db, "Dataset (Visitor Application)")
       );
-      querySnapshotB.forEach((doc) => {
-        var cdata = doc.data();
-        console.log(cdata)
-        if (data == doc.id) {
+      querySnapshotB.forEach((doc_) => {
+        var cdata = doc_.data();
+        console.log(cdata);
+        if (data == doc_.id) {
+          if (props.status == "Entry")
+            updateDoc(doc(db, "Dataset (Visitor Application)", doc_.id), {
+              In: true,
+            });
+          else
+            updateDoc(doc(db, "Dataset (Visitor Application)", doc_.id), {
+              In: false,
+            });
           cdata1 = cdata;
           setQRResult(cdata);
           seterror(null);
@@ -76,8 +92,7 @@ function QRCode(props) {
       if (!f) {
         seterror("Not Authorized");
         setQRResult({});
-      }
-      else{
+      } else {
         const docRef = await addDoc(collection(db, "Logger"), {
           Time: new Date(),
           Name: cdata1.Name,
@@ -161,7 +176,11 @@ function QRCode(props) {
                       }}
                     >
                       <p style={{ margin: "0px" }}>
-                        {Guest ? <>Department : { QRResult.Department}</>: <>Reason for Stay:{QRResult['Reason For Entry']} </>}{" "}
+                        {Guest ? (
+                          <>Department : {QRResult.Department}</>
+                        ) : (
+                          <>Reason for Stay:{QRResult["Reason For Entry"]} </>
+                        )}{" "}
                       </p>
                     </div>
                     <div
@@ -174,7 +193,10 @@ function QRCode(props) {
                     >
                       <p style={{ margin: "0px" }}>
                         {/* getDate(QRResult['Date of Exit'].ToDate()) */}
-                        Validity : {Guest ? QRResult.Validity: getDate(QRResult['Date of Exit'].toDate()) }{" "}
+                        Validity :{" "}
+                        {Guest
+                          ? QRResult.Validity
+                          : getDate(QRResult["Date of Exit"].toDate())}{" "}
                       </p>
                     </div>
                     <div
@@ -217,6 +239,11 @@ function QRCode(props) {
                         Not Authorized
                       </h3>
                     </div>
+                    <Button onClick={setQRLoaded(false)} style={{ marginTop: "15%" }}>
+                      {" "}
+                      <RefreshIcon style={{ marginRight: "10px" }} />
+                      Scan Again
+                    </Button>
                   </div>
                 </div>
               )

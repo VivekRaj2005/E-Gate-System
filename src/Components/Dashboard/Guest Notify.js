@@ -27,23 +27,21 @@ function preventDefault(event) {
 
 
 
-export default function Requests(props) {
+export default function GNotify(props) {
 
 
 
   return (
     <React.Fragment>
-      <Title>Upcoming Guest Entries</Title>
+      <Title>Guest Notification</Title>
       <Table size="small">
         <TableHead>
-          <TableRow>
+        <TableRow>
             <TableCell>SL.NO</TableCell>
             <TableCell>Full Name</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Reason For Stay</TableCell>
-            <TableCell>Date & Time of Entry</TableCell>
             <TableCell>Date & Time of Exit</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>
 
@@ -53,10 +51,8 @@ export default function Requests(props) {
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.email}</TableCell>
-              <TableCell>{row.reason}</TableCell>
-              <TableCell>{row.entry}</TableCell>
-              <TableCell>{row.exit}</TableCell>
-              <TableCell align="right"><Button onClick={() => props.handleDeleteElement(row.name, row.email, row.docid)} style={{color: 'red'}}><Close/></Button></TableCell>
+              <TableCell>{row.dt}</TableCell>
+              <TableCell align="right"><span style={{color: "red"}}>{row.status}</span></TableCell>
             </TableRow>
           ))}
         </TableBody>

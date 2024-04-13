@@ -25,25 +25,18 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-
-
-export default function Requests(props) {
-
-
-
+export default function RNotify(props) {
   return (
     <React.Fragment>
-      <Title>Upcoming Guest Entries</Title>
+      <Title>Resident Notification</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>SL.NO</TableCell>
             <TableCell>Full Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Reason For Stay</TableCell>
-            <TableCell>Date & Time of Entry</TableCell>
+            <TableCell>Roll No</TableCell>
             <TableCell>Date & Time of Exit</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="right">Status</TableCell>
           </TableRow>
         </TableHead>
 
@@ -52,18 +45,20 @@ export default function Requests(props) {
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.email}</TableCell>
-              <TableCell>{row.reason}</TableCell>
-              <TableCell>{row.entry}</TableCell>
-              <TableCell>{row.exit}</TableCell>
-              <TableCell align="right"><Button onClick={() => props.handleDeleteElement(row.name, row.email, row.docid)} style={{color: 'red'}}><Close/></Button></TableCell>
+              <TableCell>{row.roll}</TableCell>
+              <TableCell>{row.dt}</TableCell>
+              <TableCell align="right"><span style={{color:"yellow"}}>{row.status}</span></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       {props.data.length == 0 ? (
-        <div style={{ display: "flex", justifyContent: "center" , margin: "25px"}}>
-          <Alert severity="info" style={{width: '50%'}}>No Data to display</Alert>
+        <div
+          style={{ display: "flex", justifyContent: "center", margin: "25px" }}
+        >
+          <Alert severity="info" style={{ width: "50%" }}>
+            No Data to display
+          </Alert>
         </div>
       ) : (
         <>{console.log(props.data.length)}</>
