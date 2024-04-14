@@ -11,6 +11,7 @@ import QRCode from "./Components/Dashboard/QRCode";
 import EntryRequest from "./Components/Dashboard/EntryRequest";
 import Notification from "./Components/Dashboard/Notification";
 import AddResident from "./Components/Dashboard/Add User";
+import SLog from "./Components/Dashboard/Security Log";
 
 
 function Router() {
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/security/dashboard" element={<Dashboard securityData={securityData} setSecurityData={setSecurityData}/>} />
         <Route path="/security/entryreq" element={<EntryRequest securityData={securityData} setSecurityData={setSecurityData}/>} />
         <Route path="/security/addr" element={<AddResident securityData={securityData} setSecurityData={setSecurityData}/>} />
+        <Route path="/security/log/login" element={<SLog securityData={securityData} setSecurityData={setSecurityData}/>} />
         <Route path="/security/notif" element={<Notification securityData={securityData} setSecurityData={setSecurityData}/>} />
         <Route path="/security/qr/entry" element={<QRCode securityData={securityData} status={"Entry"}/>} />
         <Route path="/security/qr/exit" element={<QRCode securityData={securityData}  status={"Exit"}/>} />

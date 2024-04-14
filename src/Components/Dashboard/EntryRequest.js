@@ -23,6 +23,7 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import "../../Style/Dash.css";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -382,7 +383,29 @@ export default function EntryRequest(props) {
             {props.securityData.Username == "Admin" ? (
               <>
                 <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+                <React.Fragment>
+                  <ListSubheader component="div" inset>
+                    Generate Reports
+                  </ListSubheader>
+                  <ListItemButton onClick={() => {navigate("/security/log/login")}}>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Security Login" />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="I/P O/P Register" />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Approval" />
+                  </ListItemButton>
+                </React.Fragment>
               </>
             ) : (
               <></>

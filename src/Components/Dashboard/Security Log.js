@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -25,6 +24,7 @@ import Orders from "./Orders";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import "../../Style/Dash.css";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -44,6 +44,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import GNotify from "./Guest Notify";
 import RNotify from "./Resident Notify";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import SLTable from "./SLTable";
 
 function Copyright(props) {
   return (
@@ -124,14 +125,13 @@ function datediff(first, second) {
   return Math.round((second - first) / (1000 * 60 * 60 * 24));
 }
 
-export default function Notification(props) {
+export default function SLog(props) {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [rows, setRows] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [Notifications, setNotifications] = useState(0);
   const [GNotifyData, setGNotify] = useState([]);
-  const [RNotifyData, setRNotify] = useState([]);
 
   async function CountNotification() {
     var d1 = [];
@@ -145,25 +145,9 @@ export default function Notification(props) {
       console.log(data, datediff(date, new Date()), date - new Date());
 
       if (datediff(data.LastOut.toDate(), new Date()) >= 30) {
-        d1.push({
-          id: c + 1,
-          name: data.Name,
-          roll: data.Roll,
-          dt:
-            getDate(data.LastOut.toDate()) +
-            " " +
-            getTime(data.LastOut.toDate()),
-          status:
-            "Outside Campus for " +
-            Math.abs(datediff(new Date(), date)).toString() +
-            " day(s)",
-        });
         c += 1;
       }
     });
-    var cc = c;
-    setRNotify(d1);
-    var d2 = [];
     const querySnapshot2 = await getDocs(
       query(
         collection(db, "Dataset (Visitor Application)"),
@@ -174,25 +158,8 @@ export default function Notification(props) {
       var data = doc.data();
       if (datediff(new Date(), data["Date of Exit"].toDate()) < 0) {
         c += 1;
-        d2.push({
-          id: c - cc,
-          name: data.Name,
-          email: data.Email,
-          dt:
-            getDate(data["Date of Exit"].toDate()) +
-            " " +
-            getTime(data["Date of Exit"].toDate()),
-          status:
-            "Validity Expired " +
-            Math.abs(
-              datediff(new Date(), data["Date of Exit"].toDate())
-            ).toString() +
-            " day(s) before",
-        });
       }
     });
-    console.log(d1, d2);
-    setGNotify(d2);
     setNotifications(c);
   }
   function getDate(date) {
@@ -217,24 +184,17 @@ export default function Notification(props) {
       var myr = [];
       var c = 0;
       const querySnapshot = await getDocs(
-        query(collection(db, "Logger"), orderBy("Time"))
+        query(collection(db, 'Security Login Logger'), orderBy("Timestamp"))
       );
       querySnapshot.forEach((element) => {
         element = element.data();
         c += 1;
-        if (myr.length == 5) {
-          myr.shift();
-        }
         myr.push(
-          createData(
-            c,
-            getDate(element.Time.toDate()),
-            getTime(element.Time.toDate()),
-            element.Name,
-            element.Verified,
-            element.Status,
-            element.Permit
-          )
+          {
+            id: c,
+            name: element.Username,
+            time: String(element.Timestamp.toDate())
+          }
         );
       });
       setRows(myr.reverse());
@@ -424,21 +384,11 @@ export default function Notification(props) {
                   <Paper
                     sx={{ p: 2, display: "flex", flexDirection: "column" }}
                   >
-                    <GNotify data={GNotifyData} />
-                  </Paper>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div className="response">
-                  <Paper
-                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                  >
-                    <RNotify data={RNotifyData} />
+                    <SLTable data={rows} />
                   </Paper>
                 </div>
               </Grid>
             </Grid>
-
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

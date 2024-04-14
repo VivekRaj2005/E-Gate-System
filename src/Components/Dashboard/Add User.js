@@ -43,6 +43,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import { CSVDownload } from "react-csv";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import SignUp from "./Signup";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 function Copyright(props) {
   return (
@@ -359,7 +360,29 @@ export default function AddResident(props) {
             {props.securityData.Username == "Admin" ? (
               <>
                 <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+                <React.Fragment>
+                  <ListSubheader component="div" inset>
+                    Generate Reports
+                  </ListSubheader>
+                  <ListItemButton onClick={() => {navigate("/security/log/login")}}>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Security Login" />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="I/P O/P Register" />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Approval" />
+                  </ListItemButton>
+                </React.Fragment>
               </>
             ) : (
               <></>

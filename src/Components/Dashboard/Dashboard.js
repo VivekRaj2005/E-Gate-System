@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -359,7 +360,29 @@ export default function Dashboard(props) {
             {props.securityData.Username == "Admin" ? (
               <>
                 <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+                <React.Fragment>
+                  <ListSubheader component="div" inset>
+                    Generate Reports
+                  </ListSubheader>
+                  <ListItemButton onClick={() => {navigate("/security/log/login")}}>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Security Login" />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="I/P O/P Register" />
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AssignmentIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Approval" />
+                  </ListItemButton>
+                </React.Fragment>
               </>
             ) : (
               <></>
