@@ -140,7 +140,7 @@ export default function EntryRequest(props) {
     querySnapshot1.forEach((doc) => {
       var data = doc.data();
       var date = data.LastOut.toDate();
-      if (datediff(new Date(), date) >= 30) {
+      if (datediff(date, new Date()) >= 30) {
         c += 1;
       }
     });
@@ -338,7 +338,7 @@ export default function EntryRequest(props) {
                     </ListItemIcon>
                     <ListItemText primary="Entry Requests" />
                   </ListItemButton>
-                  <ListItemButton>
+                  <ListItemButton onClick={() => {navigate('/security/notif')}}>
                     <ListItemIcon>
                       <BarChartIcon />
                     </ListItemIcon>

@@ -13,7 +13,7 @@ import { Alert } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-
+import { CSVLink } from "react-csv";
 import { useState } from "react";
 
 // Generate Order Data
@@ -68,9 +68,23 @@ export default function Requests(props) {
       ) : (
         <>{console.log(props.data.length)}</>
       )}
-      <Button color="primary" onClick={preventDefault} sx={{ mt: 3 }}>
-        <CloudDownload style={{ marginRight: "20px" }} /> Download Full List
-      </Button>
+     <CSVLink
+        data={props.data}
+        filename={"download.csv"}
+        className="btn btn-primary"
+        style={{ display: "flex", justifyContent: "center", padding: "10px", textDecoration: "none"  }}
+      >
+        <div style={{ display: "flex" }}>
+          <CloudDownload
+            style={{
+              marginRight: "20px",
+              marginTop: "15px",
+              color: "lightblue",
+            }}
+          />
+          <p style={{ color: "lightblue", textDecoration: "none" }}> DOWNLOAD FULL LIST</p>
+        </div>
+      </CSVLink>
     </React.Fragment>
   );
 }

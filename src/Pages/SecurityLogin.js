@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Nav from "../Components/Nav";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -59,6 +59,10 @@ export default function SecurityLogin(props) {
       if (data.get("email") == cdata["Username"]) {
         if (data.get("password") == cdata["Password"]) {
           props.setSecurityData(cdata);
+          addDoc(collection(db, 'Security Login Logger'), {
+            Username: cdata.Username,
+            Timestamp: new Date()
+          })
           navigate("/security/dashboard");
         } else {
           seterror("Password Incorrect");

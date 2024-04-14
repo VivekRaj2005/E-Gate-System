@@ -152,7 +152,7 @@ export default function Notification(props) {
             " " +
             getTime(data.LastOut.toDate()),
           status:
-            "Outside Capus for " +
+            "Outside Campus for " +
             Math.abs(datediff(new Date(), date)).toString() +
             " day(s)",
         });
@@ -314,7 +314,7 @@ export default function Notification(props) {
           <Divider />
           <List component="nav">
             <React.Fragment>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate("/security/dashboard")}>
                 <ListItemIcon>
                   <DashboardIcon />
                 </ListItemIcon>

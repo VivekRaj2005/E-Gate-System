@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { addDoc, updateDoc, doc } from "firebase/firestore";
+import { CSVDownload } from "react-csv";
 
 function getDate(date) {
   var today = date;
@@ -40,7 +41,12 @@ function QRCode(props) {
   const [QRLoaded, setQRLoaded] = useState(false);
   const [Guest, setGuest] = useState(false);
   const [error, seterror] = useState(null);
+  function getCSV()
+    {
+      
+    }
   async function handleCheck(data) {
+    
     const querySnapshot = await getDocs(collection(db, "Database (Resident)"));
     var f = false;
     var cdata1 = null;

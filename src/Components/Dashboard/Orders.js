@@ -1,59 +1,16 @@
-import * as React from 'react';
-import Link from '@mui/material/Link';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Title from './Title';
-import { Alert, Button } from '@mui/material';
-import { CloudDownload } from '@mui/icons-material';
-import '../../Style/Dash.css'
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import * as React from "react";
+import Link from "@mui/material/Link";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Title from "./Title";
+import { Alert, Button } from "@mui/material";
+import { CloudDownload } from "@mui/icons-material";
+import "../../Style/Dash.css";
+import { CSVLink } from "react-csv";
+import { lightBlue } from "@mui/material/colors";
 
 export default function Orders(props) {
   return (
@@ -62,8 +19,7 @@ export default function Orders(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-        
-          <TableCell>SL.NO</TableCell>
+            <TableCell>SL.NO</TableCell>
             <TableCell>Time</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
@@ -73,7 +29,6 @@ export default function Orders(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-  
           {props.data.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.id}</TableCell>
@@ -87,9 +42,25 @@ export default function Orders(props) {
           ))}
         </TableBody>
       </Table>
-      <Button color="primary" onClick={preventDefault} sx={{ mt: 3 }}>
-        <CloudDownload style={{marginRight: '20px'}}/> Download Full List
-      </Button>
+      {/* <Button color="primary" onClick={(e) => e.preventDefault()} sx={{ mt: 3 }}> */}
+      <CSVLink
+        data={props.download}
+        filename={"download.csv"}
+        className="btn btn-primary"
+        style={{ display: "flex", justifyContent: "center", padding: "10px", textDecoration: "none"  }}
+      >
+        <div style={{ display: "flex" }}>
+          <CloudDownload
+            style={{
+              marginRight: "20px",
+              marginTop: "15px",
+              color: "lightblue",
+            }}
+          />
+          <p style={{ color: "lightblue", textDecoration: "none" }}> DOWNLOAD FULL LIST</p>
+        </div>
+      </CSVLink>
+      {/* </Button> */}
     </React.Fragment>
   );
 }
