@@ -41,10 +41,7 @@ function QRCode(props) {
   const [QRLoaded, setQRLoaded] = useState(false);
   const [Guest, setGuest] = useState(false);
   const [error, seterror] = useState(null);
-  function getCSV()
-    {
-      
-    }
+  
   async function handleCheck(data) {
     
     const querySnapshot = await getDocs(collection(db, "Database (Resident)"));
@@ -79,7 +76,7 @@ function QRCode(props) {
       querySnapshotB.forEach((doc_) => {
         var cdata = doc_.data();
         console.log(cdata);
-        if (data == doc_.id) {
+        if (data == doc_.id && new Date() > cdata['Date of Entry'].toDate() && new Date() < cdata['Date of Exit'].toDate()) {
           if (props.status == "Entry")
             updateDoc(doc(db, "Dataset (Visitor Application)", doc_.id), {
               In: true,
@@ -245,7 +242,7 @@ function QRCode(props) {
                         Not Authorized
                       </h3>
                     </div>
-                    <Button onClick={setQRLoaded(false)} style={{ marginTop: "15%" }}>
+                    <Button onClick={() => setQRLoaded(false)} style={{ marginTop: "15%" }}>
                       {" "}
                       <RefreshIcon style={{ marginRight: "10px" }} />
                       Scan Again

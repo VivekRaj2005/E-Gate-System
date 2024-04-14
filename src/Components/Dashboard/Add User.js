@@ -41,6 +41,8 @@ import { db } from "../../firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import LockIcon from "@mui/icons-material/Lock";
 import { CSVDownload } from "react-csv";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import SignUp from "./Signup";
 
 function Copyright(props) {
   return (
@@ -121,7 +123,7 @@ function datediff(first, second) {
   return Math.round((second - first) / (1000 * 60 * 60 * 24));
 }
 
-export default function Dashboard(props) {
+export default function AddResident(props) {
   const navigate = useNavigate();
   const [count, setCount] = useState(0);
   const [rows, setRows] = useState([]);
@@ -294,7 +296,7 @@ export default function Dashboard(props) {
           <Divider />
           <List component="nav">
             <React.Fragment>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate("/security/dashboard")}>
                 <ListItemIcon>
                   <DashboardIcon />
                 </ListItemIcon>
@@ -319,6 +321,12 @@ export default function Dashboard(props) {
                       <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText primary="Notifications" />
+                  </ListItemButton>
+                  <ListItemButton onClick={() => navigate("/security/addr")}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Add Resident" />
                   </ListItemButton>
                 </>
               ) : (
@@ -371,48 +379,8 @@ export default function Dashboard(props) {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  <Deposits count={count} />
-                </Paper>
-              </Grid>
-
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <div className="response">
-                  <Paper
-                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                  >
-                    <Orders data={rows} download={fullData}/>
-                  </Paper>
-                </div>
-              </Grid>
-            </Grid>
-
-            <Copyright sx={{ pt: 4 }} />
+          <Container maxWidth="lg" sx={{ mt: -3 }}>
+            <SignUp />
           </Container>
         </Box>
       </Box>

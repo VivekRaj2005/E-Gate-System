@@ -167,3 +167,7 @@ html, body {margin: 0; height: 100%; overflow: hidden}
     padding: 2%;
   }
 }
+
+.swal2-popup{
+  margin-top: 20%;
+}

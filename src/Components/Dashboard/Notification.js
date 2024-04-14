@@ -42,6 +42,7 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import LockIcon from "@mui/icons-material/Lock";
 import GNotify from "./Guest Notify";
 import RNotify from "./Resident Notify";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 
 function Copyright(props) {
   return (
@@ -140,8 +141,8 @@ export default function Notification(props) {
     querySnapshot1.forEach((doc) => {
       var data = doc.data();
       var date = data.LastOut.toDate();
-      console.log(data, datediff(date, new Date()), date -  new Date())
-      
+      console.log(data, datediff(date, new Date()), date - new Date());
+
       if (datediff(data.LastOut.toDate(), new Date()) >= 30) {
         d1.push({
           id: c + 1,
@@ -189,7 +190,7 @@ export default function Notification(props) {
         });
       }
     });
-    console.log(d1, d2)
+    console.log(d1, d2);
     setGNotify(d2);
     setNotifications(c);
   }
@@ -335,6 +336,12 @@ export default function Notification(props) {
                       <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText primary="Notifications" />
+                  </ListItemButton>
+                  <ListItemButton onClick={() => navigate("/security/addr")}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Add Resident" />
                   </ListItemButton>
                 </>
               ) : (

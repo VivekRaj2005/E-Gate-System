@@ -44,6 +44,7 @@ import Requests from "./Requests";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 
 function datediff(first, second) {
   return Math.round((second - first) / (1000 * 60 * 60 * 24));
@@ -343,6 +344,12 @@ export default function EntryRequest(props) {
                       <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText primary="Notifications" />
+                  </ListItemButton>
+                  <ListItemButton onClick={() => navigate("/security/addr")}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Add Resident" />
                   </ListItemButton>
                 </>
               ) : (

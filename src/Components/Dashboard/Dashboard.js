@@ -41,6 +41,7 @@ import { db } from "../../firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import LockIcon from "@mui/icons-material/Lock";
 import { CSVDownload } from "react-csv";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 
 function Copyright(props) {
   return (
@@ -320,6 +321,12 @@ export default function Dashboard(props) {
                     </ListItemIcon>
                     <ListItemText primary="Notifications" />
                   </ListItemButton>
+                  <ListItemButton onClick={() => navigate("/security/addr")}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Add Resident" />
+                  </ListItemButton>
                 </>
               ) : (
                 <></>
@@ -336,6 +343,7 @@ export default function Dashboard(props) {
                 </ListItemIcon>
                 <ListItemText primary="Exit Scan" />
               </ListItemButton>
+
               <ListItemButton
                 onClick={() => {
                   props.setSecurityData(null);
@@ -406,7 +414,7 @@ export default function Dashboard(props) {
                   <Paper
                     sx={{ p: 2, display: "flex", flexDirection: "column" }}
                   >
-                    <Orders data={rows} download={fullData}/>
+                    <Orders data={rows} download={fullData} />
                   </Paper>
                 </div>
               </Grid>
